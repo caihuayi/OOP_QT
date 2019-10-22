@@ -112,6 +112,14 @@ void MainWindow::mouseMoveEvent(QMouseEvent *mouse)
         {
             if (gra->get_active() == true)
             {
+                ////////UNDO//////////
+                if (isInList(gra))
+                {
+                    list.push_back(gra);
+                    list.erase(getGraphIter(gra));
+                }
+                cout << "list.size=" << list.size() << endl;
+                /////////////////////
                 gra->OnPress(mouse->x(), mouse->y());
                 gra->OnMove(mouse->x()-gra->old_x, mouse->y()-gra->old_y);
                 this->update();
@@ -195,4 +203,29 @@ Graph* MainWindow::whichActive(double x, double y)
 
 
     return gra;
+}
+
+bool MainWindow::isInList(Graph* gra)
+{
+    for (auto& iter : list)
+    {
+        if (iter == gra)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+QList<Graph*>::iterator MainWindow::getGraphIter(Graph* gra)
+{
+    QList<Graph*>::iterator iter;
+    for (iter = list.begin(); iter != list.end(); iter++)
+    {
+        if (gra == *iter)
+        {
+            return iter;
+        }
+    }
+    return list.end();
 }

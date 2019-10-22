@@ -36,6 +36,8 @@ private slots:
 private:
     Graph* createObj();
     Graph* whichActive(double x, double y);
+    bool isInList(Graph*);
+    QList<Graph*>::iterator getGraphIter(Graph*);
 
     enum GraphType{_circle, _rectangle, _triangle, _line};
     Ui::MainWindow *ui;
