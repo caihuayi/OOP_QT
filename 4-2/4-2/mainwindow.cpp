@@ -19,7 +19,14 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
-    //delete cir;
+    if (list.isEmpty() == false)
+    {
+        for(auto &iter : list)
+        {
+            delete iter;
+        }
+    }
+    list.clear();
 }
 
 void MainWindow::paintEvent(QPaintEvent *)
@@ -27,6 +34,7 @@ void MainWindow::paintEvent(QPaintEvent *)
     QPainter painter(this);
     painter.setPen(pen);
     painter.setBrush(brush);
+    if (list.isEmpty() == true) return;
     for (auto &iter : list)
     {
         iter->Draw(painter);
@@ -36,20 +44,26 @@ void MainWindow::paintEvent(QPaintEvent *)
 void MainWindow::mousePressEvent(QMouseEvent *mouse)
 {
     Graph* gra;
-    for (auto &iter : list)
+    if (list.isEmpty() != true)
     {
-        iter->OnPress(mouse->x(), mouse->y());
+        for (auto &iter : list)
+        {
+            iter->OnPress(mouse->x(), mouse->y());
+        }
     }
     gra = whichActive(mouse->x(), mouse->y());
 
     if (gra == nullptr)
     {
         gra = createObj();
-        Graph *ig = list.back();
-        if (ig->get_exist() == false)
+        if (list.isEmpty() != true)
         {
-            list.pop_back();
-            delete ig;
+            Graph *ig = list.back();
+            if (ig->get_exist() == false)
+            {
+                list.pop_back();
+                delete ig;
+            }
         }
         list.push_back(gra);
         gra->begPoint(mouse->x(), mouse->y());
@@ -165,13 +179,17 @@ Graph* MainWindow::createObj()
 Graph* MainWindow::whichActive(double x, double y)
 {
     Graph *gra = nullptr;
-    for (auto &iter : list)
+    if (list.isEmpty() != true)
     {
-        if (iter->get_active() == true)
+        for (auto &iter : list)
         {
-            gra = iter;
+            if (iter->get_active() == true)
+            {
+                gra = iter;
+            }
         }
     }
+
 
     return gra;
 }
