@@ -19,8 +19,7 @@ void Rectangle::Create(double x, double y)
 
 void Rectangle::OnPress(double x, double y)
 {
-    if (x >= base_point.rx() && x <= base_point.rx()+width
-            && y >= base_point.ry() && y <= base_point.ry()+height)
+    if (isIn(x, y))
     {
         active = true;
     }
@@ -39,9 +38,13 @@ void Rectangle::OnMove(double cx, double cy)
     }
 }
 
-
-
 void Rectangle::Draw(QPainter &painter)
 {
     painter.drawRect(base_point.rx(), base_point.ry(), width, height);
+}
+
+bool Rectangle::isIn(double x, double y)
+{
+    return x >= base_point.rx() && x <= base_point.rx()+width
+            && y >= base_point.ry() && y <= base_point.ry()+height;
 }

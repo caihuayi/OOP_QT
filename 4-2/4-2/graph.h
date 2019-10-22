@@ -11,6 +11,7 @@ public:
     virtual void OnPress(double x, double y) = 0;
     virtual void OnMove(double x, double y) = 0;
     virtual void Draw(QPainter&) = 0;
+    virtual bool isIn(double x, double y) = 0;
 
     virtual void begPoint(double x, double y);
     void OnRelease(double x, double y);

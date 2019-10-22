@@ -12,6 +12,7 @@ public:
     void OnMove(double cx, double cy) override;
     void Draw(QPainter &) override;
     void begPoint(double x, double y) override;
+    bool isIn(double x, double y) override;
 private:
     QPointF point1;
     QPointF point2;

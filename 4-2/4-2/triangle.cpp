@@ -27,12 +27,13 @@ void Triangle::Create(double x, double y)
 
 void Triangle::OnPress(double x, double y)
 {
-    if (x >= point[0].rx() && x <= point[1].rx()
-            && y >= point[0].ry() && y <= point[1].ry()
-            && (y-point[0].ry())/(x-point[0].rx()) >=
-            (point[0].ry()-point[1].ry())/(point[0].rx()-point[1].rx()))
+    if (isIn(x, y))
     {
         active = true;
+    }
+    else
+    {
+        active = false;
     }
     cout << "active=" << active << endl;
 }
@@ -53,4 +54,12 @@ void Triangle::OnMove(double cx, double cy)
 void Triangle::Draw(QPainter &painter)
 {
     painter.drawPolygon(point, 3, Qt::OddEvenFill);
+}
+
+bool Triangle::isIn(double x, double y)
+{
+    return x >= point[0].rx() && x <= point[1].rx()
+            && y >= point[0].ry() && y <= point[1].ry()
+            && (y-point[0].ry())/(x-point[0].rx()) >=
+            (point[0].ry()-point[1].ry())/(point[0].rx()-point[1].rx());
 }

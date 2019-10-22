@@ -25,12 +25,7 @@ void Line::Create(double x, double y)
 
 void Line::OnPress(double x, double y)
 {
-    if (x >= point1.rx() && x <= point2.rx()
-            && y >= point1.ry() && y <= point2.ry()
-            && (y-point1.ry())/(x-point1.rx()) >=
-            (point1.ry()-point2.ry())/(point1.rx()-point2.rx())-10
-            && (y-point1.ry())/(x-point1.rx()) <=
-            (point1.ry()-point2.ry())/(point1.rx()-point2.rx())+10)
+    if (isIn(x, y))
     {
         active = true;
     }
@@ -51,4 +46,14 @@ void Line::OnMove(double cx, double cy)
 void Line::Draw(QPainter &painter)
 {
     painter.drawLine(point1, point2);
+}
+
+bool Line::isIn(double x, double y)
+{
+    return x >= point1.rx() && x <= point2.rx()
+            && y >= point1.ry() && y <= point2.ry()
+            && (y-point1.ry())/(x-point1.rx()) >=
+            (point1.ry()-point2.ry())/(point1.rx()-point2.rx())-10
+            && (y-point1.ry())/(x-point1.rx()) <=
+            (point1.ry()-point2.ry())/(point1.rx()-point2.rx())+10;
 }

@@ -11,6 +11,7 @@ public:
     void OnPress(double x, double y) override;
     void OnMove(double cx, double cy) override;
     void Draw(QPainter&) override;
+    bool isIn(double x, double y) override;
 private:
     double height;
     double width;

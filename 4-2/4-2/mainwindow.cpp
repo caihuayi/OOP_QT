@@ -13,12 +13,13 @@ MainWindow::MainWindow(QWidget *parent)
     QStringList stringList = {"circle", "rectangle", "triangle", "line"};
     ui->comboBox->addItems(stringList);
     type = _circle;
-    cir = new Rectangle();
+    //cir = new Circle();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    //delete cir;
 }
 
 void MainWindow::paintEvent(QPaintEvent *)
@@ -26,32 +27,45 @@ void MainWindow::paintEvent(QPaintEvent *)
     QPainter painter(this);
     painter.setPen(pen);
     painter.setBrush(brush);
-    cir->Draw(painter);
+    for (auto &iter : list)
+    {
+        iter->Draw(painter);
+    }
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *mouse)
 {
-    bool is_active = false;
-    for (auto& iter : list)
+    Graph* gra;
+    for (auto &iter : list)
     {
-        is_active = iter->get_active();
+        iter->OnPress(mouse->x(), mouse->y());
     }
-    if (is_active == false)
+    gra = whichActive(mouse->x(), mouse->y());
+
+    if (gra == nullptr)
     {
-        if (cir->get_exist() == true)
+        gra = createObj();
+        Graph *ig = list.back();
+        if (ig->get_exist() == false)
         {
-            cir->OnPress(mouse->x(), mouse->y());
-            cir->old_x = mouse->x();
-            cir->old_y = mouse->y();
+            list.pop_back();
+            delete ig;
         }
-        else
-        {
-            cir->begPoint(mouse->x(), mouse->y());
-        }
+        list.push_back(gra);
+        gra->begPoint(mouse->x(), mouse->y());
     }
     else
     {
+        if (gra->get_exist() == true)   //准备拖动
+        {
+            gra->OnPress(mouse->x(), mouse->y());
+            gra->old_x = mouse->x();
+            gra->old_y = mouse->y();
+        }
+        else    //创建第一个点
+        {
 
+        }
     }
 }
 
@@ -59,23 +73,32 @@ void MainWindow::mouseMoveEvent(QMouseEvent *mouse)
 {
     if (mouse->buttons() & Qt::LeftButton)
     {
-        if (cir->get_exist() == false)
+        Graph *gra = nullptr;
+        for (auto &iter : list)
         {
-            cir->Create(mouse->x(), mouse->y());
+            if (iter->isIn(mouse->x(), mouse->y()) == true)
+            {
+                gra = iter;
+            }
+        }
+        if (gra == nullptr)
+        {
+            gra = list.back();
+            gra->Create(mouse->x(), mouse->y());
             if (mouse->buttons() & Qt::LeftButton)
             {
-                cir->Create(mouse->x(), mouse->y());
+                gra->Create(mouse->x(), mouse->y());
                 this->update();
             }
         }
         else
         {
-            if (cir->get_active() == true)
+            if (gra->get_active() == true)
             {
-                cir->OnPress(mouse->x(), mouse->y());
-                cir->OnMove(mouse->x()-cir->old_x, mouse->y()-cir->old_y);
+                gra->OnPress(mouse->x(), mouse->y());
+                gra->OnMove(mouse->x()-gra->old_x, mouse->y()-gra->old_y);
                 this->update();
-                cir->OnRelease(mouse->x(), mouse->y());
+                gra->OnRelease(mouse->x(), mouse->y());
             }
         }
     }
@@ -83,8 +106,9 @@ void MainWindow::mouseMoveEvent(QMouseEvent *mouse)
 
 void MainWindow::mouseReleaseEvent(QMouseEvent *mouse)
 {
-    cir->OnRelease(mouse->x(), mouse->y());
-    cir->set_active(false);
+    Graph *gra = list.back();
+    gra->OnRelease(mouse->x(), mouse->y());
+    gra->set_active(false);
     cout << "active == false" << endl;
 }
 
@@ -109,4 +133,45 @@ void MainWindow::on_comboBox_currentTextChanged(const QString &arg1)
     {
         type = _line;
     }
+}
+
+Graph* MainWindow::createObj()
+{
+    Graph *gra;
+    if (type == _circle)
+    {
+        gra = new Circle();
+    }
+    else if(type == _rectangle)
+    {
+        gra = new Rectangle();
+    }
+    else if(type == _triangle)
+    {
+        gra = new Triangle();
+    }
+    else if(type == _line)
+    {
+        gra = new Line();
+    }
+    else
+    {
+        gra = nullptr;
+    }
+
+    return gra;
+}
+
+Graph* MainWindow::whichActive(double x, double y)
+{
+    Graph *gra = nullptr;
+    for (auto &iter : list)
+    {
+        if (iter->get_active() == true)
+        {
+            gra = iter;
+        }
+    }
+
+    return gra;
 }

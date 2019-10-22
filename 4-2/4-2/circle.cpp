@@ -18,8 +18,7 @@ void Circle::Create(double x, double y)
 
 void Circle::OnPress(double x, double y)
 {
-    double displacement = sqrt((x-base_point.rx())*(x-base_point.rx())+(y-base_point.ry())*(y-base_point.ry()));
-    if (displacement <= diameter)
+    if (isIn(x, y))
     {
         active = true;
     }
@@ -39,6 +38,12 @@ void Circle::OnMove(double cx, double cy)
         base_point.setX(base_point.rx()+cx);
         base_point.setY(base_point.ry()+cy);
     }
+}
+
+bool Circle::isIn(double x, double y)
+{
+    double displacement = sqrt((x-base_point.rx())*(x-base_point.rx())+(y-base_point.ry())*(y-base_point.ry()));
+    return displacement <= diameter;
 }
 
 

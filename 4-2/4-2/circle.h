@@ -12,6 +12,8 @@ public:
     void OnPress(double x, double y) override;
     void OnMove(double x, double y) override;
     void Draw(QPainter&) override;
+    bool isIn(double x, double y) override;
+
     QPointF get_base_point();
     qreal get_diameter();
 private:

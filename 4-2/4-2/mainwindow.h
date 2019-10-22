@@ -9,6 +9,7 @@
 #include <QBrush>
 #include <iostream>
 #include <vector>
+#include <QList>
 #include <QString>
 #include "rectangle.h"
 #include "triangle.h"
@@ -33,12 +34,16 @@ private slots:
     void on_comboBox_currentTextChanged(const QString &arg1);
 
 private:
+    Graph* createObj();
+    Graph* whichActive(double x, double y);
+
     enum GraphType{_circle, _rectangle, _triangle, _line};
     Ui::MainWindow *ui;
-    Graph *cir;
+    //Graph *cir;
     QPen pen;
     QBrush brush;
-    std::vector<Graph*> list;
+    QList<Graph*> list;
     GraphType type;
+
 };
 #endif // MAINWINDOW_H
