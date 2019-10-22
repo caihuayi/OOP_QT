@@ -98,11 +98,14 @@ void MainWindow::mouseMoveEvent(QMouseEvent *mouse)
         if (gra == nullptr)
         {
             gra = list.back();
-            gra->Create(mouse->x(), mouse->y());
+            //gra->Create(mouse->x(), mouse->y());
             if (mouse->buttons() & Qt::LeftButton)
             {
-                gra->Create(mouse->x(), mouse->y());
-                this->update();
+                if (gra->get_exist() == false)
+                {
+                    gra->Create(mouse->x(), mouse->y());
+                    this->update();
+                }
             }
         }
         else
