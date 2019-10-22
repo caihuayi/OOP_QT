@@ -51,7 +51,7 @@ void MainWindow::mousePressEvent(QMouseEvent *mouse)
             iter->OnPress(mouse->x(), mouse->y());
         }
     }
-    gra = whichActive(mouse->x(), mouse->y());
+    gra = whichActive();
 
     if (gra == nullptr)
     {
@@ -117,6 +117,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *mouse)
                 {
                     list.push_back(gra);
                     list.erase(getGraphIter(gra));
+
                 }
                 cout << "list.size=" << list.size() << endl;
                 /////////////////////
@@ -187,7 +188,7 @@ Graph* MainWindow::createObj()
     return gra;
 }
 
-Graph* MainWindow::whichActive(double x, double y)
+Graph* MainWindow::whichActive()
 {
     Graph *gra = nullptr;
     if (list.isEmpty() != true)
@@ -228,4 +229,14 @@ QList<Graph*>::iterator MainWindow::getGraphIter(Graph* gra)
         }
     }
     return list.end();
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *key)
+{
+    if (key->key() == Qt::Key_Space)
+    {
+        list.push_back(list.first());
+        list.erase(list.begin());
+        this->update();
+    }
 }
