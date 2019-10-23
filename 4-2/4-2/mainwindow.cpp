@@ -113,7 +113,6 @@ void MainWindow::mouseMoveEvent(QMouseEvent *mouse)
         {
             if (gra->get_active() == true)
             {
-                ////////UNDO//////////
                 if (isInList(gra))
                 {
                     list.push_back(gra);
@@ -121,7 +120,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *mouse)
 
                 }
                 cout << "list.size=" << list.size() << endl;
-                /////////////////////
+
                 gra->OnPress(mouse->x(), mouse->y());
                 gra->OnMove(mouse->x()-gra->old_x, mouse->y()-gra->old_y);
                 this->update();

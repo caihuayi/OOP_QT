@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "circle.h"
 #include <QPainter>
 #include <QMouseEvent>
 #include <QPen>
@@ -10,9 +9,6 @@
 #include <iostream>
 #include <QList>
 #include <QString>
-#include "rectangle.h"
-#include "triangle.h"
-#include "line.h"
 #include <QKeyEvent>
 #include "linefactory.h"
 #include "circlefactory.h"
