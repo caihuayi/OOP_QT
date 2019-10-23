@@ -14,6 +14,10 @@
 #include "triangle.h"
 #include "line.h"
 #include <QKeyEvent>
+#include "linefactory.h"
+#include "circlefactory.h"
+#include "rectanglefactory.h"
+#include "trianglefactory.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -48,6 +52,6 @@ private:
     QBrush brush;
     QList<Graph*> list;
     GraphType type;
-
+    GraphFactory *factory;
 };
 #endif // MAINWINDOW_H

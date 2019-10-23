@@ -75,8 +75,9 @@ void MainWindow::mousePressEvent(QMouseEvent *mouse)
             gra->OnPress(mouse->x(), mouse->y());
             gra->old_x = mouse->x();
             gra->old_y = mouse->y();
+            this->update();
         }
-        else    //创建第一个点
+        else
         {
 
         }
@@ -163,27 +164,28 @@ void MainWindow::on_comboBox_currentTextChanged(const QString &arg1)
 
 Graph* MainWindow::createObj()
 {
-    Graph *gra;
     if (type == _circle)
     {
-        gra = new Circle();
+        factory = new CircleFactory();
     }
     else if(type == _rectangle)
     {
-        gra = new Rectangle();
+        factory = new RectangleFactory();
     }
     else if(type == _triangle)
     {
-        gra = new Triangle();
+        factory = new TriangleFactory();
     }
     else if(type == _line)
     {
-        gra = new Line();
+        factory = new LineFactory();
     }
     else
     {
-        gra = nullptr;
+        factory = nullptr;
     }
+    Graph* gra = factory->create();
+    delete factory;
 
     return gra;
 }
