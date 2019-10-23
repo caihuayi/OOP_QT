@@ -7,7 +7,6 @@ class LineFactory : public GraphFactory
 {
 public:
     Graph* create() override;
-
 };
 
 #endif // LINEFACTORY_H
