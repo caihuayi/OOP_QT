@@ -8,12 +8,17 @@
 #include <QPen>
 #include <QBrush>
 #include <iostream>
-#include <vector>
 #include <QList>
 #include <QString>
 #include "rectangle.h"
 #include "triangle.h"
 #include "line.h"
+#include <QKeyEvent>
+#include "linefactory.h"
+#include "circlefactory.h"
+#include "rectanglefactory.h"
+#include "trianglefactory.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -28,6 +33,7 @@ public:
     void mousePressEvent(QMouseEvent*);
     void mouseMoveEvent(QMouseEvent*);
     void mouseReleaseEvent(QMouseEvent*);
+    void keyPressEvent(QKeyEvent*);
     ~MainWindow();
 
 private slots:
@@ -35,7 +41,7 @@ private slots:
 
 private:
     Graph* createObj();
-    Graph* whichActive(double x, double y);
+    Graph* whichActive();
     bool isInList(Graph*);
     QList<Graph*>::iterator getGraphIter(Graph*);
 
@@ -46,6 +52,6 @@ private:
     QBrush brush;
     QList<Graph*> list;
     GraphType type;
-
+    GraphFactory *factory;
 };
 #endif // MAINWINDOW_H

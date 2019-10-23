@@ -37,4 +37,3 @@ void Graph::OnRelease(double x, double y)
     old_x = x;
     old_y = y;
 }
-

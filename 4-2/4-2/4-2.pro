@@ -17,20 +17,30 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     circle.cpp \
+    circlefactory.cpp \
     graph.cpp \
+    graphfactory.cpp \
     line.cpp \
+    linefactory.cpp \
     main.cpp \
     mainwindow.cpp \
     rectangle.cpp \
-    triangle.cpp
+    rectanglefactory.cpp \
+    triangle.cpp \
+    trianglefactory.cpp
 
 HEADERS += \
     circle.h \
+    circlefactory.h \
     graph.h \
+    graphfactory.h \
     line.h \
+    linefactory.h \
     mainwindow.h \
     rectangle.h \
-    triangle.h
+    rectanglefactory.h \
+    triangle.h \
+    trianglefactory.h
 
 FORMS += \
     mainwindow.ui
