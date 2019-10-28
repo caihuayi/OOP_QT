@@ -63,3 +63,29 @@ bool Triangle::isIn(double x, double y)
             && (y-point[0].ry())/(x-point[0].rx()) >=
             (point[0].ry()-point[1].ry())/(point[0].rx()-point[1].rx());
 }
+
+QTextStream& Triangle::write_file(QTextStream &out)
+{
+    out << 3 << " ";
+    for (int i = 0; i < 3; i++)
+    {
+        out << point[i].rx() << " " << point[i].ry() << " ";
+    }
+    Graph::write_file(out);
+
+    return out;
+}
+
+QTextStream& Triangle::read_file(QTextStream &in)
+{
+    double x, y;
+    for (int i = 0; i < 3; i++)
+    {
+        in >> x >> y;
+        point[i].setX(x);
+        point[i].setY(y);
+    }
+    Graph::read_file(in);
+
+    return in;
+}

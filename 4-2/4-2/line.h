@@ -13,6 +13,8 @@ public:
     void Draw(QPainter &) override;
     void begPoint(double x, double y) override;
     bool isIn(double x, double y) override;
+    QTextStream& write_file(QTextStream&) override;
+    QTextStream& read_file(QTextStream&) override;
 private:
     QPointF point1;
     QPointF point2;

@@ -2,6 +2,7 @@
 #define CIRCLE_H
 #include "graph.h"
 #include <qmath.h>
+#include <iostream>
 
 class Circle :  public Graph
 {
@@ -13,7 +14,8 @@ public:
     void OnMove(double x, double y) override;
     void Draw(QPainter&) override;
     bool isIn(double x, double y) override;
-
+    QTextStream& write_file(QTextStream&) override;
+    QTextStream& read_file(QTextStream&) override;
     QPointF get_base_point();
     qreal get_diameter();
 private:

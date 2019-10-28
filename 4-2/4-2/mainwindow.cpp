@@ -135,7 +135,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *mouse)
     Graph *gra = list.back();
     gra->OnRelease(mouse->x(), mouse->y());
     gra->set_active(false);
-    cout << "active == false" << endl;
+    //cout << "active == false" << endl;
 }
 
 
@@ -238,6 +238,55 @@ void MainWindow::keyPressEvent(QKeyEvent *key)
     {
         list.push_back(list.first());
         list.erase(list.begin());
+        this->update();
+    }
+}
+
+void MainWindow::on_btn_save_clicked()
+{
+    QFile data("/Users/huayicai/Desktop/file.txt");
+    if (data.open(QFile::WriteOnly | QIODevice::Truncate))
+    {
+        QTextStream out(&data);
+        out << list.size() << endl;
+        for (auto &iter : list)
+        {
+            iter->write_file(out);
+        }
+        data.close();
+    }
+}
+
+void MainWindow::on_btn_load_clicked()
+{
+    QFile data("/Users/huayicai/Desktop/file.txt");
+    if (data.open(QFile::ReadOnly))
+    {
+        QTextStream in(&data);
+        int count;
+        int type;
+        in >> count;
+        for (int i = 0; i < count; i++)
+        {
+            Graph *gra;
+            in >> type;
+            switch(type)
+            {
+            case 1:
+                gra = new Circle();break;
+            case 2:
+                gra = new Rectangle();break;
+            case 3:
+                gra = new Triangle();break;
+            case 4:
+                gra = new Line();break;
+            default:
+                throw "wrong type";
+            }
+            gra->read_file(in);
+            list.push_back(gra);
+        }
+        data.close();
         this->update();
     }
 }

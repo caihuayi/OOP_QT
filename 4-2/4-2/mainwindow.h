@@ -10,6 +10,10 @@
 #include <QList>
 #include <QString>
 #include <QKeyEvent>
+#include <fstream>
+#include <QFile>
+#include <QTextStream>
+#include <QString>
 #include "linefactory.h"
 #include "circlefactory.h"
 #include "rectanglefactory.h"
@@ -22,7 +26,6 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-
 public:
     MainWindow(QWidget *parent = nullptr);
     void paintEvent(QPaintEvent*);
@@ -35,7 +38,12 @@ public:
 private slots:
     void on_comboBox_currentTextChanged(const QString &arg1);
 
+    void on_btn_save_clicked();
+
+    void on_btn_load_clicked();
+
 private:
+    const std::string path8 = "~/Desktop/dgaadsqwergfgfsasd.txt";
     Graph* createObj();
     Graph* whichActive();
     bool isInList(Graph*);

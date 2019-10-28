@@ -1,6 +1,7 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 #include <QPainter>
+#include <QTextStream>
 #include <iostream>
 class Graph
 {
@@ -13,6 +14,8 @@ public:
     virtual void Draw(QPainter&) = 0;
     virtual bool isIn(double x, double y) = 0;
 
+    virtual QTextStream& write_file(QTextStream&);
+    virtual QTextStream& read_file(QTextStream&);
     virtual void begPoint(double x, double y);
     void OnRelease(double x, double y);
     bool get_exist();

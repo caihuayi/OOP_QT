@@ -48,3 +48,19 @@ bool Rectangle::isIn(double x, double y)
     return x >= base_point.rx() && x <= base_point.rx()+width
             && y >= base_point.ry() && y <= base_point.ry()+height;
 }
+
+QTextStream& Rectangle::write_file(QTextStream & out)
+{
+    out << 2 << " " << height << " " << width << " ";
+    Graph::write_file(out);
+
+    return out;
+}
+
+QTextStream& Rectangle::read_file(QTextStream & in)
+{
+    in >> height >> width;
+    Graph::read_file(in);
+
+    return in;
+}

@@ -46,6 +46,21 @@ bool Circle::isIn(double x, double y)
     return displacement <= diameter;
 }
 
+QTextStream& Circle::write_file(QTextStream& out)
+{
+    out << 1 << " " << diameter << " ";
+    Graph::write_file(out);
+
+    return out;
+}
+
+QTextStream& Circle::read_file(QTextStream& in)
+{
+    in >> diameter;
+    Graph::read_file(in);
+
+    return in;
+}
 
 QPointF Circle::get_base_point()
 {
